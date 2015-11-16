@@ -1,11 +1,7 @@
 ﻿using MultiLevelCachePoC.CacheContracts.ApiContracts;
+using MultiLevelCachePoC.CacheContracts.EntityContracts;
 using MultiLevelCachePoC.CacheCore.Core;
 using MultiLevelCachePoC.CacheCore.PersistenceEngines;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MultiLevelCachePoC.ConsoleCacheClient
 {
@@ -28,14 +24,16 @@ namespace MultiLevelCachePoC.ConsoleCacheClient
                 Description = "This is the engine B"
             };
 
-            cache.Insert(engineA);
+            cache.Insert(engineA, true);
 
-            var engineResult1 = cache.Get(engineB.GetIdentifier());
-            var engineResult2 = cache.Get(engineA.GetIdentifier());
+            var engineResult1 = cache.Get(engineB.GetIdentifier()); //should be null
+            var engineResult2 = cache.Get(engineA.GetIdentifier()); //should return
 
             cache.Delete(engineA.GetIdentifier());
 
-            var engineResult3 = cache.Get(engineA.GetIdentifier());
+            var engineResult3 = cache.Get(engineA.GetIdentifier()); // should be null
+            //var engineResult4 = cache.Get(engineA.GetIdentifier(),true); //should return
+            //var engineResult5 = cache.Get(engineA.GetIdentifier()); //should return
         }
     }
 }

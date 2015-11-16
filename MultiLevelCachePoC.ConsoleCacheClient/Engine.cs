@@ -1,19 +1,15 @@
-﻿using MultiLevelCachePoC.CacheContracts.EntityContracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
+using MultiLevelCachePoC.CacheContracts.EntityContracts;
 
 namespace MultiLevelCachePoC.ConsoleCacheClient
 {
-    public class Engine : ICacheableEntity
+    public class Engine : CacheableEntity
     {
         public int Id { get; set; }
 
         public string Description { get; set; }
 
-        public string GetIdentifier()
+        public override string GetIdentifier()
         {
             return Id.ToString();
         }

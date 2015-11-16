@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 
 namespace MultiLevelCachePoC.CacheCore.PersistenceEngines
 {
-    public class XmlFilePersistenceEngine<T> : IPersistenceEngine<T> where T : class, ICacheableEntity
+    public class XmlFilePersistenceEngine<T> : IPersistenceEngine<T> where T : CacheableEntity
     {
         private readonly string _targetFolder;
 
@@ -20,9 +20,7 @@ namespace MultiLevelCachePoC.CacheCore.PersistenceEngines
         private void CheckFolder(string targetFolder)
         {
             if (!Directory.Exists(targetFolder))
-            {
                 Directory.CreateDirectory(targetFolder);
-            }
         }
 
         public IEnumerable<T> Load()
@@ -40,25 +38,22 @@ namespace MultiLevelCachePoC.CacheCore.PersistenceEngines
                     {
                         result.Add((T)deserializer.Deserialize(reader));
                     }
-                }               
+                }
             }
             return result;
         }
 
         public void Remove(T value)
         {
-            string targetFile = Path.Combine(_targetFolder,
-                value.GetIdentifier() + ".cache");
-
+            string targetFile = Path.Combine(_targetFolder, value.GetIdentifier() + ".cache");
             File.Delete(targetFile);
         }
 
         public void Persist(T value)
         {
-            string targetFile = Path.Combine(_targetFolder,
-                value.GetIdentifier() + ".cache");
+            string targetFile = Path.Combine(_targetFolder,value.GetIdentifier() + ".cache");
 
-            XmlSerializer serializer = new XmlSerializer(typeof(T));
+            XmlSerializer serializer = new XmlSerializer(value.GetType());
             using (TextWriter writer = new StreamWriter(targetFile))
             {
                 serializer.Serialize(writer, value);

@@ -38,8 +38,9 @@
     <Reference Include="System.ServiceModel" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EntityContracts\ICacheableEntity.cs" />
     <Compile Include="ApiContracts\ILocalCache.cs" />
+    <Compile Include="EntityContracts\Engine.cs" />
+    <Compile Include="EntityContracts\CacheableEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

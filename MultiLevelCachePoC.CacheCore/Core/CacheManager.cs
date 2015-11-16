@@ -1,16 +1,13 @@
 ﻿using MultiLevelCachePoC.CacheContracts.ApiContracts;
 using MultiLevelCachePoC.CacheContracts.EntityContracts;
 using MultiLevelCachePoC.CacheCore.PersistenceEngines;
+
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Caching;
-using System.Text;
-using System.Threading;
 
 namespace MultiLevelCachePoC.CacheCore.Core
 {
-    public class CacheManager<T> : ILocalCache<T> where T : class, ICacheableEntity
+    public class CacheManager<T> : ILocalCache<T> where T :CacheableEntity
     {
         private readonly string _cacheName;
         private MemoryCache _cacheInfraestructure;
@@ -30,7 +27,7 @@ namespace MultiLevelCachePoC.CacheCore.Core
             if (_persistenceEngine == null) return;
 
             foreach (var item in _persistenceEngine.Load())
-                Insert((T)item);
+                Insert(item);
         }
 
         public void ClearCache()
@@ -43,38 +40,25 @@ namespace MultiLevelCachePoC.CacheCore.Core
         public void Insert(T cacheItem, bool withSync = false)
         {
             //TODO :: Refactor
+            var item = new CacheItem(cacheItem.GetIdentifier(), cacheItem);
+            CacheItemPolicy cacheItemPolicy = GetDefaultCacheItemPlocy();
 
             if (withSync)
             {
-                //TODO :: Sinc with cache upper level
+                //_upperCacheLevel.Insert(item);
             }
-
-            var item = new CacheItem(cacheItem.GetIdentifier(), cacheItem);
-            var cacheItemPolicy = new CacheItemPolicy() //TODO :: Modify expiration policy from app config
-            {
-                AbsoluteExpiration = DateTime.Now.AddDays(1.0),
-                RemovedCallback = ItemRemoved
-            };
 
             _cacheInfraestructure.Set(item.Key, item, cacheItemPolicy);
             ItemAdded(cacheItem);
         }
 
-        private void ItemAdded(T item)
-        {
-            _persistenceEngine.Persist(item);
-        }
-
-        private void ItemRemoved(CacheEntryRemovedArguments arguments)
-        {
-            _persistenceEngine.Remove((T)(arguments.CacheItem.Value as CacheItem).Value);
-        }
 
         public T Get(string identifier, bool withSync = false)
         {
             if (withSync)
             {
-                //TODO :: Sinc with cache upper level and update current level
+                //var syncItem = _upperCacheLevel.Get(identifier);
+                //_cacheInfraestructure.Set(syncItem.Key, syncItem.Value, GetCacheItemPlocy());
             }
 
             var result = _cacheInfraestructure.Get(identifier);
@@ -87,10 +71,32 @@ namespace MultiLevelCachePoC.CacheCore.Core
         {
             if (withSync)
             {
-                //TODO :: Sinc with cache upper level
+                //_upperCacheLevel.Delete(identifier);
             }
 
             _cacheInfraestructure.Remove(identifier);
+        }
+
+        private void ItemAdded(T item)
+        {
+            if (_persistenceEngine != null)
+                _persistenceEngine.Persist(item);
+        }
+
+        private void ItemRemoved(CacheEntryRemovedArguments arguments)
+        {
+            if (_persistenceEngine != null)
+                _persistenceEngine.Remove((T)(arguments.CacheItem.Value as CacheItem).Value);
+        }
+
+        private CacheItemPolicy GetDefaultCacheItemPlocy()
+        {
+            var cacheItemPolicy = new CacheItemPolicy() //TODO :: Modify expiration policy from app config
+            {
+                AbsoluteExpiration = DateTime.Now.AddMinutes(1.0),
+                RemovedCallback = ItemRemoved
+            };
+            return cacheItemPolicy;
         }
     }
 }
