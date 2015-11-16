@@ -13,7 +13,7 @@ namespace MultiLevelCachePoC.ConsoleCacheClient
 
         public string Description { get; set; }
 
-        public override string GetIdentifier()
+        public string GetIdentifier()
         {
             return Id.ToString();
         }

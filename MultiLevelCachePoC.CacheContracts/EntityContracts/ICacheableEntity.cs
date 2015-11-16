@@ -1,7 +1,7 @@
 ﻿namespace MultiLevelCachePoC.CacheContracts.EntityContracts
 {
-    public abstract class ICacheableEntity
+    public interface ICacheableEntity
     {
-        public abstract string GetIdentifier();
+        string GetIdentifier();
     }
 }

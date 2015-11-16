@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 
 namespace MultiLevelCachePoC.CacheCore.PersistenceEngines
 {
-    public class XmlFilePersistenceEngine<T> : IPersistenceEngine<T> where T : ICacheableEntity
+    public class XmlFilePersistenceEngine<T> : IPersistenceEngine<T> where T : class, ICacheableEntity
     {
         private readonly string _targetFolder;
 

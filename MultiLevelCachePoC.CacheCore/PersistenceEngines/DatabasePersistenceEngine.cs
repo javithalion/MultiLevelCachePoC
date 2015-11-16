@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace MultiLevelCachePoC.CacheCore.PersistenceEngines
 {
-    public class DatabasePersistenceEngine<T> : IPersistenceEngine<T> where T : ICacheableEntity
+    public class DatabasePersistenceEngine<T> : IPersistenceEngine<T> where T : class, ICacheableEntity
     {
         public IEnumerable<T> Load()
         {

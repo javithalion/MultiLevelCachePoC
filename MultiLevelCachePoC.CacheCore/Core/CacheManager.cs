@@ -10,7 +10,7 @@ using System.Threading;
 
 namespace MultiLevelCachePoC.CacheCore.Core
 {
-    public class CacheManager<T> : ILocalCache<T> where T : ICacheableEntity
+    public class CacheManager<T> : ILocalCache<T> where T : class, ICacheableEntity
     {
         private readonly string _cacheName;
         private MemoryCache _cacheInfraestructure;

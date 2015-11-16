@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace MultiLevelCachePoC.CacheCore.PersistenceEngines
 {
-    public interface IPersistenceEngine<T> where T : ICacheableEntity
+    public interface IPersistenceEngine<T> where T : class, ICacheableEntity
     {
         IEnumerable<T> Load();
         void Remove(T value);
