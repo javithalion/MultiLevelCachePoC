@@ -32,8 +32,8 @@ namespace MultiLevelCachePoC.ConsoleCacheClient
             cache.Delete(engineA.GetIdentifier());
 
             var engineResult3 = cache.Get(engineA.GetIdentifier()); // should be null
-            //var engineResult4 = cache.Get(engineA.GetIdentifier(),true); //should return
-            //var engineResult5 = cache.Get(engineA.GetIdentifier()); //should return
+            var engineResult4 = cache.Get(engineA.GetIdentifier(),true); //should return
+            var engineResult5 = cache.Get(engineA.GetIdentifier()); //should return
         }
     }
 }

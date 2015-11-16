@@ -31,14 +31,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
-    <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.ServiceModel" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApiContracts\ILocalCache.cs" />
+    <Compile Include="ApiContracts\IMasterCache.cs" />
     <Compile Include="EntityContracts\Engine.cs" />
     <Compile Include="EntityContracts\CacheableEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

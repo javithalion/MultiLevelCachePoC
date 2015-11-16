@@ -6,11 +6,11 @@ namespace MultiLevelCachePoC.CacheContracts.ApiContracts
     public interface ILocalCache<T> where T : CacheableEntity
     {
         void Insert(T cacheItem, bool withSync = false);
-
+       
         T Get(string identifier, bool withSync = false);
-
+        
         void Delete(string identifier, bool withSync = false);
-
+       
         void ClearCache();
     }
 }

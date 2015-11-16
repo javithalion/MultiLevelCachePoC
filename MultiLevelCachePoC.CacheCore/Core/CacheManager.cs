@@ -1,23 +1,25 @@
 ﻿using MultiLevelCachePoC.CacheContracts.ApiContracts;
 using MultiLevelCachePoC.CacheContracts.EntityContracts;
 using MultiLevelCachePoC.CacheCore.PersistenceEngines;
-
+using MultiLevelCachePoC.CacheCore.UpperTierCache;
 using System;
 using System.Runtime.Caching;
 
 namespace MultiLevelCachePoC.CacheCore.Core
 {
-    public class CacheManager<T> : ILocalCache<T> where T :CacheableEntity
+    public class CacheManager<T> : ILocalCache<T> where T : CacheableEntity
     {
         private readonly string _cacheName;
         private MemoryCache _cacheInfraestructure;
         private readonly IPersistenceEngine<T> _persistenceEngine;
+        private readonly ILocalCacheOf_Engine _upperTierCacheClient;
 
         public CacheManager(IPersistenceEngine<T> engine = null)
         {
             _cacheName = typeof(T).Name;
             _cacheInfraestructure = new MemoryCache(_cacheName);
             _persistenceEngine = engine;
+            _upperTierCacheClient = new LocalCacheOf_EngineClient();
 
             LoadInitialCacheContent();
         }
@@ -45,7 +47,7 @@ namespace MultiLevelCachePoC.CacheCore.Core
 
             if (withSync)
             {
-                //_upperCacheLevel.Insert(item);
+                _upperTierCacheClient.Insert(cacheItem,withSync);
             }
 
             _cacheInfraestructure.Set(item.Key, item, cacheItemPolicy);
@@ -57,8 +59,8 @@ namespace MultiLevelCachePoC.CacheCore.Core
         {
             if (withSync)
             {
-                //var syncItem = _upperCacheLevel.Get(identifier);
-                //_cacheInfraestructure.Set(syncItem.Key, syncItem.Value, GetCacheItemPlocy());
+                var syncItem = (T)_upperTierCacheClient.Get(identifier);
+                Insert(syncItem);
             }
 
             var result = _cacheInfraestructure.Get(identifier);
@@ -71,7 +73,7 @@ namespace MultiLevelCachePoC.CacheCore.Core
         {
             if (withSync)
             {
-                //_upperCacheLevel.Delete(identifier);
+                //_upperTierCacheClient.Delete(identifier);
             }
 
             _cacheInfraestructure.Remove(identifier);
