@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiLevelCachePoC.CacheCore", "MultiLevelCachePoC.CacheCore\MultiLevelCachePoC.CacheCore.csproj", "{BEBEF0EE-9D1E-4D57-851E-A31C7052520E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiLevelCachePoC.CacheContracts", "MultiLevelCachePoC.CacheContracts\MultiLevelCachePoC.CacheContracts.csproj", "{0011019E-4196-4DAB-80BB-54BE0D54D3D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiLevelCachePoC.ConsoleCacheClient", "MultiLevelCachePoC.ConsoleCacheClient\MultiLevelCachePoC.ConsoleCacheClient.csproj", "{483E1C0B-35C2-462D-9703-52D79B242838}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BEBEF0EE-9D1E-4D57-851E-A31C7052520E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BEBEF0EE-9D1E-4D57-851E-A31C7052520E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BEBEF0EE-9D1E-4D57-851E-A31C7052520E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BEBEF0EE-9D1E-4D57-851E-A31C7052520E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0011019E-4196-4DAB-80BB-54BE0D54D3D5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0011019E-4196-4DAB-80BB-54BE0D54D3D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0011019E-4196-4DAB-80BB-54BE0D54D3D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0011019E-4196-4DAB-80BB-54BE0D54D3D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{483E1C0B-35C2-462D-9703-52D79B242838}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{483E1C0B-35C2-462D-9703-52D79B242838}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{483E1C0B-35C2-462D-9703-52D79B242838}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{483E1C0B-35C2-462D-9703-52D79B242838}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
