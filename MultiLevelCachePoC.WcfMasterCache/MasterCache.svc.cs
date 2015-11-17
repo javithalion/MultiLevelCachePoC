@@ -19,19 +19,19 @@ namespace MultiLevelCachePoC.WcfMasterCache
             _masterCache.ClearCache();
         }
 
-        public void Delete(string identifier, bool withSync = false)
+        public void Delete(string identifier, SyncMode syncMode = SyncMode.WithoutSync)
         {
-            _masterCache.Delete(identifier, withSync);
+            _masterCache.Delete(identifier, syncMode);
         }
 
-        public CacheableEntity Get(string identifier, bool withSync = false)
+        public CacheableEntity Get(string identifier, SyncMode syncMode = SyncMode.WithoutSync)
         {
-            return _masterCache.Get(identifier, withSync);
+            return _masterCache.Get(identifier, syncMode);
         }
 
-        public void Insert(CacheableEntity item, bool withSync = false)
+        public void Insert(CacheableEntity item, SyncMode syncMode = SyncMode.WithoutSync)
         {
-            _masterCache.Insert(item, withSync);
+            _masterCache.Insert(item, syncMode);
         }
     }
 }

@@ -3,18 +3,18 @@ using System.ServiceModel;
 
 namespace MultiLevelCachePoC.CacheContracts.ApiContracts
 {
-    [ServiceKnownType(typeof(CacheableEntity))]    
+    [ServiceKnownType(typeof(CacheableEntity))]
     [ServiceContract]
     public interface ICacheManager
     {
         [OperationContract]
-        void Insert(CacheableEntity item, bool withSync = false);
+        void Insert(CacheableEntity item, SyncMode syncMode = SyncMode.WithoutSync);
 
         [OperationContract]
-        CacheableEntity Get(string identifier, bool withSync = false);
+        CacheableEntity Get(string identifier, SyncMode syncMode = SyncMode.WithoutSync);
 
         [OperationContract]
-        void Delete(string identifier, bool withSync = false);
+        void Delete(string identifier, SyncMode syncMode = SyncMode.WithoutSync);
 
         [OperationContract]
         void ClearCache();

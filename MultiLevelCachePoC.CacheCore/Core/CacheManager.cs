@@ -45,11 +45,11 @@ namespace MultiLevelCachePoC.CacheCore.Core
             _cacheInfraestructure = new MemoryCache(_cacheName);
         }
 
-        public void Insert(CacheableEntity cacheItem, bool withSync = false)
+        public void Insert(CacheableEntity cacheItem, SyncMode syncMode = SyncMode.WithoutSync)
         {
             var item = new CacheItem(cacheItem.GetUniqueHash(), cacheItem);
 
-            if (_isCacheSlave && withSync)
+            if (_isCacheSlave && syncMode == SyncMode.WithSync )
             {
                 _upperLevelCacheClient.Insert(cacheItem, false);
             }
@@ -59,13 +59,13 @@ namespace MultiLevelCachePoC.CacheCore.Core
         }
 
 
-        public CacheableEntity Get(string identifier, bool withSync = false)
+        public CacheableEntity Get(string identifier, SyncMode syncMode = SyncMode.WithoutSync)
         {
-            if (_isCacheSlave && withSync)
+            if (_isCacheSlave && syncMode == SyncMode.WithSync)
             {
                 var syncObject = _upperLevelCacheClient.Get(identifier, false);
                 if (syncObject != null)
-                    Insert(syncObject, false);
+                    Insert(syncObject, SyncMode.WithoutSync);
             }
 
             var result = _cacheInfraestructure.Get(identifier);
@@ -74,9 +74,9 @@ namespace MultiLevelCachePoC.CacheCore.Core
                 null;
         }
 
-        public void Delete(string identifier, bool withSync = false)
+        public void Delete(string identifier, SyncMode syncMode = SyncMode.WithoutSync)
         {
-            if (_isCacheSlave && withSync)
+            if (_isCacheSlave && syncMode == SyncMode.WithSync)
             {
                 _upperLevelCacheClient.Delete(identifier, false);
             }
