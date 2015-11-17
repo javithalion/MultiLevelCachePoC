@@ -4,19 +4,19 @@ using System.Collections.Generic;
 
 namespace MultiLevelCachePoC.CacheCore.PersistenceEngines
 {
-    public class DatabasePersistenceEngine<T> : IPersistenceEngine<T> where T : CacheableEntity
+    public class DatabasePersistenceEngine : IPersistenceEngine
     {
-        public IEnumerable<T> Load()
+        public IEnumerable<CacheableEntity> Load()
         {
             throw new NotImplementedException();
         }
 
-        public void Persist(T value)
+        public void Persist(CacheableEntity value)
         {
             throw new NotImplementedException();
         }
 
-        public void Remove(T value)
+        public void Remove(CacheableEntity value)
         {
             throw new NotImplementedException();
         }

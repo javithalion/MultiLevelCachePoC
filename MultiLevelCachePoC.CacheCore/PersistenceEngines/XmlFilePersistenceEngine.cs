@@ -5,7 +5,7 @@ using System.Xml.Serialization;
 
 namespace MultiLevelCachePoC.CacheCore.PersistenceEngines
 {
-    public class XmlFilePersistenceEngine<T> : IPersistenceEngine<T> where T : CacheableEntity
+    public class XmlFilePersistenceEngine : IPersistenceEngine
     {
         private readonly string _targetFolder;
 
@@ -21,35 +21,35 @@ namespace MultiLevelCachePoC.CacheCore.PersistenceEngines
                 Directory.CreateDirectory(targetFolder);
         }
 
-        public IEnumerable<T> Load()
+        public IEnumerable<CacheableEntity> Load()
         {
             //TODO :: Refactor
-            IList<T> result = new List<T>();
+            IList<CacheableEntity> result = new List<CacheableEntity>();
             var directory = new DirectoryInfo(_targetFolder);
 
             if (directory.GetFiles().Length > 0)
             {
                 foreach (var file in directory.GetFiles())
                 {
-                    XmlSerializer deserializer = new XmlSerializer(typeof(T));
+                    XmlSerializer deserializer = new XmlSerializer(typeof(CacheableEntity));
                     using (TextReader reader = new StreamReader(file.FullName))
                     {
-                        result.Add((T)deserializer.Deserialize(reader));
+                        result.Add((CacheableEntity)deserializer.Deserialize(reader));
                     }
                 }
             }
             return result;
         }
 
-        public void Remove(T value)
+        public void Remove(CacheableEntity value)
         {
-            string targetFile = Path.Combine(_targetFolder, value.GetIdentifier() + ".cache");
+            string targetFile = Path.Combine(_targetFolder, value.GetHashCode() + ".cache");
             File.Delete(targetFile);
         }
 
-        public void Persist(T value)
+        public void Persist(CacheableEntity value)
         {
-            string targetFile = Path.Combine(_targetFolder,value.GetIdentifier() + ".cache");
+            string targetFile = Path.Combine(_targetFolder,value.GetHashCode() + ".cache");
 
             XmlSerializer serializer = new XmlSerializer(value.GetType());
             using (TextWriter writer = new StreamWriter(targetFile))

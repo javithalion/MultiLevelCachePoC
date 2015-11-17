@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace MultiLevelCachePoC.CacheCore.PersistenceEngines
 {
-    public interface IPersistenceEngine<T> where T : CacheableEntity
+    public interface IPersistenceEngine
     {
-        void Persist(T value);
-        void Remove(T value);
+        void Persist(CacheableEntity value);
+        void Remove(CacheableEntity value);
 
-        IEnumerable<T> Load();
+        IEnumerable<CacheableEntity> Load();
     }
 }

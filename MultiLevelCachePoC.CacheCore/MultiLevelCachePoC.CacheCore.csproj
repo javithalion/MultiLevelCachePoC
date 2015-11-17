@@ -44,11 +44,6 @@
     <Compile Include="PersistenceEngines\IPersistenceEngine.cs" />
     <Compile Include="PersistenceEngines\XmlFilePersistenceEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service References\UpperTierCache\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MultiLevelCachePoC.CacheContracts\MultiLevelCachePoC.CacheContracts.csproj">
@@ -61,37 +56,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Properties\DataSources\MultiLevelCachePoC.CacheContracts.EntityContracts.CacheableEntity.datasource" />
-    <None Include="Properties\DataSources\MultiLevelCachePoC.CacheContracts.EntityContracts.Engine.datasource" />
-    <None Include="Properties\DataSources\System.Runtime.Caching.CacheItem.datasource" />
-    <None Include="Service References\UpperTierCache\EngineMasterCache.wsdl" />
-    <None Include="Service References\UpperTierCache\EngineMasterCache.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\UpperTierCache\EngineMasterCache1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\UpperTierCache\EngineMasterCache2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadataStorage Include="Service References\UpperTierCache\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\UpperTierCache\EngineMasterCache.disco" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\UpperTierCache\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\UpperTierCache\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\UpperTierCache\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
