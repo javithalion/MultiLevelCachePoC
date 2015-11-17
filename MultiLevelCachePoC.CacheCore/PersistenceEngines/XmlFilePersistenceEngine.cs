@@ -1,6 +1,8 @@
 ﻿using MultiLevelCachePoC.CacheContracts.EntityContracts;
+using MultiLevelCachePoC.CacheCore.Helpers;
 using System.Collections.Generic;
 using System.IO;
+using System.Xml;
 using System.Xml.Serialization;
 
 namespace MultiLevelCachePoC.CacheCore.PersistenceEngines
@@ -23,18 +25,27 @@ namespace MultiLevelCachePoC.CacheCore.PersistenceEngines
 
         public IEnumerable<CacheableEntity> Load()
         {
-            //TODO :: Refactor
+            //TODO :: Refactor!!
             IList<CacheableEntity> result = new List<CacheableEntity>();
             var directory = new DirectoryInfo(_targetFolder);
 
             if (directory.GetFiles().Length > 0)
             {
+                var declaredTypes = ReflectionHelper.GetCAcheableEntityTypeDescendants();
                 foreach (var file in directory.GetFiles())
                 {
-                    XmlSerializer deserializer = new XmlSerializer(typeof(CacheableEntity));
-                    using (TextReader reader = new StreamReader(file.FullName))
+                    XmlSerializer deserializer;
+                    foreach (var type in declaredTypes)
                     {
-                        result.Add((CacheableEntity)deserializer.Deserialize(reader));
+                        deserializer = new XmlSerializer(type);
+                        using (XmlReader reader = new XmlTextReader(file.FullName))
+                        {
+                            if (deserializer.CanDeserialize(reader))
+                            {
+                                result.Add((CacheableEntity)deserializer.Deserialize(reader));
+                                break;
+                            }
+                        }
                     }
                 }
             }
@@ -49,7 +60,7 @@ namespace MultiLevelCachePoC.CacheCore.PersistenceEngines
 
         public void Persist(CacheableEntity value)
         {
-            string targetFile = Path.Combine(_targetFolder,value.GetUniqueHash() + ".cache");
+            string targetFile = Path.Combine(_targetFolder, value.GetUniqueHash() + ".cache");
 
             XmlSerializer serializer = new XmlSerializer(value.GetType());
             using (TextWriter writer = new StreamWriter(targetFile))

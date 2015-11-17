@@ -7,15 +7,14 @@ using System.Threading.Tasks;
 
 namespace MultiLevelCachePoC.ConsoleLocalCache
 {
-    public class Engine : CacheableEntity
+    public class Station : CacheableEntity
     {
         public int Id { get; set; }
-
         public string Description { get; set; }
 
         public override string GetUniqueHash()
         {
-            return string.Format("Engine_{0}", Id);
+            return string.Format("Station_{0}", Id);
         }
     }
 }

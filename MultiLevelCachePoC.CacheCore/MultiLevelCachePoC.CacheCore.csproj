@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\CacheManager.cs" />
+    <Compile Include="Helpers\ReflectionHelper.cs" />
     <Compile Include="PersistenceEngines\DatabasePersistenceEngine.cs" />
     <Compile Include="PersistenceEngines\IPersistenceEngine.cs" />
     <Compile Include="PersistenceEngines\XmlFilePersistenceEngine.cs" />
