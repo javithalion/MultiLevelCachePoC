@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="fb864c66-6aff-44ad-9a87-8f2f864569a1" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:58545/MasterCache.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="MasterCache.xsd" MetadataType="Schema" ID="ab360af9-9329-4d20-af10-f1f51811d642" SourceId="1" SourceUrl="http://localhost:58545/MasterCache.svc?xsd=xsd2" />
+    <MetadataFile FileName="MasterCache.disco" MetadataType="Disco" ID="2706f087-5aad-41ba-a0cb-07a4eb9d80b3" SourceId="1" SourceUrl="http://localhost:58545/MasterCache.svc?disco" />
+    <MetadataFile FileName="MasterCache1.xsd" MetadataType="Schema" ID="5b3f5b0a-7698-4e23-a6ec-7d4353fc82fd" SourceId="1" SourceUrl="http://localhost:58545/MasterCache.svc?xsd=xsd1" />
+    <MetadataFile FileName="MasterCache.wsdl" MetadataType="Wsdl" ID="4bf0466c-9054-4c82-97f5-e1b2b1a02322" SourceId="1" SourceUrl="http://localhost:58545/MasterCache.svc?wsdl" />
+    <MetadataFile FileName="MasterCache2.xsd" MetadataType="Schema" ID="7532728e-ac82-46d2-a30c-c2fd23c04e37" SourceId="1" SourceUrl="http://localhost:58545/MasterCache.svc?xsd=xsd0" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

@@ -10,7 +10,7 @@ namespace MultiLevelCachePoC.CacheCore.Helpers
 {
     public static class ReflectionHelper
     {
-        public static IEnumerable<Type> GetCAcheableEntityTypeDescendants()
+        public static IEnumerable<Type> GetCacheableEntityTypeDescendants()
         {
             //TODO :: Test
             List<Type> result = new List<Type>();

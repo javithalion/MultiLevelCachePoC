@@ -1,24 +1,32 @@
 ﻿using MultiLevelCachePoC.CacheContracts.ApiContracts;
 using MultiLevelCachePoC.CacheContracts.EntityContracts;
 using MultiLevelCachePoC.CacheCore.PersistenceEngines;
+using MultiLevelCachePoC.CacheCore.UpperLevelCache;
 using System;
+using System.Configuration;
 using System.Runtime.Caching;
+
 
 namespace MultiLevelCachePoC.CacheCore.Core
 {
-    public class CacheManager : ICacheManager
+    public class CacheManager : CacheContracts.ApiContracts.ICacheManager
     {
         private readonly string _cacheName;
-        private MemoryCache _cacheInfraestructure;
         private readonly IPersistenceEngine _persistenceEngine;
-       
+        private MemoryCache _cacheInfraestructure;
+        private readonly UpperLevelCache.ICacheManager _upperLevelCacheClient;
+        private readonly bool _isCacheSlave;        
 
-        public CacheManager(IPersistenceEngine engine = null)
+        public CacheManager(string name, IPersistenceEngine engine = null)
         {
-            _cacheName = "XXXX";
+            _cacheName = name;
             _cacheInfraestructure = new MemoryCache(_cacheName);
+            _isCacheSlave = ConfigurationManager.AppSettings["IsCacheSlave"].ToString().ToLower().StartsWith("y");
             _persistenceEngine = engine;
-            
+
+            if (_isCacheSlave)
+                _upperLevelCacheClient = new CacheManagerClient();           
+
             LoadInitialCacheContent();
         }
 
@@ -38,12 +46,12 @@ namespace MultiLevelCachePoC.CacheCore.Core
         }
 
         public void Insert(CacheableEntity cacheItem, bool withSync = false)
-        {           
-            var item = new CacheItem(cacheItem.GetUniqueHash(), cacheItem);            
+        {
+            var item = new CacheItem(cacheItem.GetUniqueHash(), cacheItem);
 
-            if (withSync)
+            if (_isCacheSlave && withSync)
             {
-                //TODO
+                _upperLevelCacheClient.Insert(cacheItem, false);
             }
 
             _cacheInfraestructure.Set(item.Key, item, GetDefaultCacheItemPlocy());
@@ -53,9 +61,11 @@ namespace MultiLevelCachePoC.CacheCore.Core
 
         public CacheableEntity Get(string identifier, bool withSync = false)
         {
-            if (withSync)
+            if (_isCacheSlave && withSync)
             {
-               //TODO
+                var syncObject = _upperLevelCacheClient.Get(identifier, false);
+                if (syncObject != null)
+                    Insert(syncObject, false);
             }
 
             var result = _cacheInfraestructure.Get(identifier);
@@ -66,9 +76,9 @@ namespace MultiLevelCachePoC.CacheCore.Core
 
         public void Delete(string identifier, bool withSync = false)
         {
-            if (withSync)
+            if (_isCacheSlave && withSync)
             {
-                //TODO
+                _upperLevelCacheClient.Delete(identifier, false);
             }
 
             _cacheInfraestructure.Remove(identifier);

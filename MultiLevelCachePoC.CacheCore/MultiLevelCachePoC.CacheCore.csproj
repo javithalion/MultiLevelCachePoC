@@ -31,6 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Runtime.Caching" />
@@ -45,6 +46,11 @@
     <Compile Include="PersistenceEngines\IPersistenceEngine.cs" />
     <Compile Include="PersistenceEngines\XmlFilePersistenceEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service References\UpperLevelCache\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MultiLevelCachePoC.CacheContracts\MultiLevelCachePoC.CacheContracts.csproj">
@@ -56,7 +62,35 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="Properties\DataSources\MultiLevelCachePoC.CacheContracts.EntityContracts.CacheableEntity.datasource" />
+    <None Include="Service References\UpperLevelCache\MasterCache.wsdl" />
+    <None Include="Service References\UpperLevelCache\MasterCache.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\UpperLevelCache\MasterCache1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\UpperLevelCache\MasterCache2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\UpperLevelCache\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\UpperLevelCache\MasterCache.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\UpperLevelCache\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\UpperLevelCache\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\UpperLevelCache\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

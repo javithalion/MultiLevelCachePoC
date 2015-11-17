@@ -1,11 +1,7 @@
 ﻿using MultiLevelCachePoC.CacheContracts.ApiContracts;
 using MultiLevelCachePoC.CacheCore.Core;
 using MultiLevelCachePoC.CacheCore.PersistenceEngines;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using MultiLevelCachePoC.Domain;
 
 namespace MultiLevelCachePoC.ConsoleLocalCache
 {
@@ -14,8 +10,7 @@ namespace MultiLevelCachePoC.ConsoleLocalCache
         static void Main(string[] args)
         {
             IPersistenceEngine persistenceEngine = new XmlFilePersistenceEngine(@".\CacheContent\");
-            ICacheManager cacheManager = new CacheManager(persistenceEngine);
-
+            ICacheManager cacheManager = new CacheManager("LocalCache", persistenceEngine);
 
             var engine_A = new Engine() { Id = 1, Description = "This is the engine A" };
             var station_A = new Station() { Id = 1, Description = "This is the station A" };

@@ -31,7 +31,7 @@ namespace MultiLevelCachePoC.CacheCore.PersistenceEngines
 
             if (directory.GetFiles().Length > 0)
             {
-                var declaredTypes = ReflectionHelper.GetCAcheableEntityTypeDescendants();
+                var declaredTypes = ReflectionHelper.GetCacheableEntityTypeDescendants();
                 foreach (var file in directory.GetFiles())
                 {
                     XmlSerializer deserializer;

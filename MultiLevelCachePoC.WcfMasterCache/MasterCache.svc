@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="MultiLevelCachePoC.WcfMasterCache.MasterCache" CodeBehind="MasterCache.svc.cs" %>

@@ -1,11 +1,6 @@
 ﻿using MultiLevelCachePoC.CacheContracts.EntityContracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace MultiLevelCachePoC.ConsoleLocalCache
+namespace MultiLevelCachePoC.Domain
 {
     public class Station : CacheableEntity
     {
