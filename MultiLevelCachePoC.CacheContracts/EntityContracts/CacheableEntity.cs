@@ -2,6 +2,6 @@
 {  
     public abstract class CacheableEntity
     {
-       
+        public abstract string GetUniqueHash();
     }
 }

@@ -43,13 +43,13 @@ namespace MultiLevelCachePoC.CacheCore.PersistenceEngines
 
         public void Remove(CacheableEntity value)
         {
-            string targetFile = Path.Combine(_targetFolder, value.GetHashCode() + ".cache");
+            string targetFile = Path.Combine(_targetFolder, value.GetUniqueHash() + ".cache");
             File.Delete(targetFile);
         }
 
         public void Persist(CacheableEntity value)
         {
-            string targetFile = Path.Combine(_targetFolder,value.GetHashCode() + ".cache");
+            string targetFile = Path.Combine(_targetFolder,value.GetUniqueHash() + ".cache");
 
             XmlSerializer serializer = new XmlSerializer(value.GetType());
             using (TextWriter writer = new StreamWriter(targetFile))

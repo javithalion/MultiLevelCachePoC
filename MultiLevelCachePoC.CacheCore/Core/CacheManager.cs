@@ -38,17 +38,15 @@ namespace MultiLevelCachePoC.CacheCore.Core
         }
 
         public void Insert(CacheableEntity cacheItem, bool withSync = false)
-        {
-            //TODO :: Refactor
-            var item = new CacheItem(cacheItem.GetHashCode().ToString(), cacheItem);
-            CacheItemPolicy cacheItemPolicy = GetDefaultCacheItemPlocy();
+        {           
+            var item = new CacheItem(cacheItem.GetUniqueHash(), cacheItem);            
 
             if (withSync)
             {
                 //TODO
             }
 
-            _cacheInfraestructure.Set(item.Key, item, cacheItemPolicy);
+            _cacheInfraestructure.Set(item.Key, item, GetDefaultCacheItemPlocy());
             ItemAdded(cacheItem);
         }
 
