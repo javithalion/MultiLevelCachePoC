@@ -1,7 +1,7 @@
-﻿using MultiLevelCachePoC.CacheContracts.ApiContracts;
-using System;
-using MultiLevelCachePoC.CacheContracts.EntityContracts;
+﻿using System;
+using MultiLevelCachePoC.CacheCore.ApiContracts;
 using MultiLevelCachePoC.CacheCore.Core;
+using MultiLevelCachePoC.CacheCore.EntityContracts;
 
 namespace MultiLevelCachePoC.WcfMasterCache
 {
@@ -19,17 +19,17 @@ namespace MultiLevelCachePoC.WcfMasterCache
             _masterCache.ClearCache();
         }
 
-        public void Delete(string identifier, SyncMode syncMode = SyncMode.WithoutSync)
+        public void Delete(string identifier, SyncMode syncMode = SyncMode.NoSync)
         {
             _masterCache.Delete(identifier, syncMode);
         }
 
-        public CacheableEntity Get(string identifier, SyncMode syncMode = SyncMode.WithoutSync)
+        public CacheableEntity Get(string identifier, SyncMode syncMode = SyncMode.NoSync)
         {
             return _masterCache.Get(identifier, syncMode);
         }
 
-        public void Insert(CacheableEntity item, SyncMode syncMode = SyncMode.WithoutSync)
+        public void Insert(CacheableEntity item, SyncMode syncMode = SyncMode.NoSync)
         {
             _masterCache.Insert(item, syncMode);
         }

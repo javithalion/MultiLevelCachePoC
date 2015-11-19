@@ -9,8 +9,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MultiLevelCachePoC.Domain</RootNamespace>
     <AssemblyName>MultiLevelCachePoC.Domain</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -38,9 +39,9 @@
     <Compile Include="Station.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MultiLevelCachePoC.CacheContracts\MultiLevelCachePoC.CacheContracts.csproj">
-      <Project>{0011019e-4196-4dab-80bb-54be0d54d3d5}</Project>
-      <Name>MultiLevelCachePoC.CacheContracts</Name>
+    <ProjectReference Include="..\MultiLevelCachePoC.CacheCore\MultiLevelCachePoC.CacheCore.csproj">
+      <Project>{bebef0ee-9d1e-4d57-851e-a31c7052520e}</Project>
+      <Name>MultiLevelCachePoC.CacheCore</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

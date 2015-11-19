@@ -40,57 +40,25 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApiContracts\ICacheManager.cs" />
+    <Compile Include="ApiContracts\SyncMode.cs" />
     <Compile Include="Core\CacheManager.cs" />
+    <Compile Include="EntityContracts\CacheableEntity.cs" />
     <Compile Include="Helpers\ReflectionHelper.cs" />
     <Compile Include="PersistenceEngines\DatabasePersistenceEngine.cs" />
     <Compile Include="PersistenceEngines\IPersistenceEngine.cs" />
     <Compile Include="PersistenceEngines\XmlFilePersistenceEngine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service References\UpperLevelCache\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\MultiLevelCachePoC.CacheContracts\MultiLevelCachePoC.CacheContracts.csproj">
-      <Project>{0011019e-4196-4dab-80bb-54be0d54d3d5}</Project>
-      <Name>MultiLevelCachePoC.CacheContracts</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="Properties\DataSources\MultiLevelCachePoC.CacheContracts.EntityContracts.CacheableEntity.datasource" />
-    <None Include="Service References\UpperLevelCache\MasterCache.wsdl" />
-    <None Include="Service References\UpperLevelCache\MasterCache.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\UpperLevelCache\MasterCache1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\UpperLevelCache\MasterCache2.xsd">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Service References\UpperLevelCache\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\UpperLevelCache\MasterCache.disco" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\UpperLevelCache\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\UpperLevelCache\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\UpperLevelCache\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
+    <Folder Include="Exceptions\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

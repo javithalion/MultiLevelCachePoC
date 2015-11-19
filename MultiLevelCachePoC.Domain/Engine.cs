@@ -1,4 +1,5 @@
-﻿using MultiLevelCachePoC.CacheContracts.EntityContracts;
+﻿
+using MultiLevelCachePoC.CacheCore.EntityContracts;
 
 namespace MultiLevelCachePoC.Domain
 {

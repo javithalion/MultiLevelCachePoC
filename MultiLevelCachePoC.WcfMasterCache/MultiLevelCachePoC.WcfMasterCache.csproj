@@ -13,7 +13,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>MultiLevelCachePoC.WcfMasterCache</RootNamespace>
     <AssemblyName>MultiLevelCachePoC.WcfMasterCache</AssemblyName>
-    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <WcfConfigValidationEnabled>True</WcfConfigValidationEnabled>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <UseIISExpress>true</UseIISExpress>
@@ -22,6 +22,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -42,12 +43,12 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
-    <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.EnterpriseServices" />
@@ -82,10 +83,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\MultiLevelCachePoC.CacheContracts\MultiLevelCachePoC.CacheContracts.csproj">
-      <Project>{0011019e-4196-4dab-80bb-54be0d54d3d5}</Project>
-      <Name>MultiLevelCachePoC.CacheContracts</Name>
-    </ProjectReference>
     <ProjectReference Include="..\MultiLevelCachePoC.CacheCore\MultiLevelCachePoC.CacheCore.csproj">
       <Project>{bebef0ee-9d1e-4d57-851e-a31c7052520e}</Project>
       <Name>MultiLevelCachePoC.CacheCore</Name>

@@ -1,18 +1,15 @@
-﻿using MultiLevelCachePoC.CacheContracts.EntityContracts;
+﻿using MultiLevelCachePoC.CacheCore.EntityContracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MultiLevelCachePoC.CacheCore.Helpers
 {
     public static class ReflectionHelper
     {
         public static IEnumerable<Type> GetCacheableEntityTypeDescendants()
-        {
-            //TODO :: Test
+        {           
             List<Type> result = new List<Type>();
 
             var mainType = typeof(CacheableEntity);

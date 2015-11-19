@@ -1,7 +1,8 @@
-﻿using MultiLevelCachePoC.CacheContracts.ApiContracts;
-using MultiLevelCachePoC.CacheContracts.EntityContracts;
+﻿
+using MultiLevelCachePoC.CacheCore.ApiContracts;
+using MultiLevelCachePoC.CacheCore.EntityContracts;
 using MultiLevelCachePoC.CacheCore.PersistenceEngines;
-using MultiLevelCachePoC.CacheCore.UpperLevelCache;
+
 using System;
 using System.Configuration;
 using System.Runtime.Caching;
@@ -9,23 +10,23 @@ using System.Runtime.Caching;
 
 namespace MultiLevelCachePoC.CacheCore.Core
 {
-    public class CacheManager : CacheContracts.ApiContracts.ICacheManager
+    public class CacheManager : ICacheManager
     {
         private readonly string _cacheName;
         private readonly IPersistenceEngine _persistenceEngine;
         private MemoryCache _cacheInfraestructure;
-        private readonly UpperLevelCache.ICacheManager _upperLevelCacheClient;
-        private readonly bool _isCacheSlave;        
+        private readonly ICacheManager _masterCache;
+        private readonly bool _isSlaveCache;
 
-        public CacheManager(string name, IPersistenceEngine engine = null)
+        private static readonly object _locker = new object();
+
+        public CacheManager(string name, IPersistenceEngine engine = null, ICacheManager masterCache = null)
         {
             _cacheName = name;
             _cacheInfraestructure = new MemoryCache(_cacheName);
-            _isCacheSlave = ConfigurationManager.AppSettings["IsCacheSlave"].ToString().ToLower().StartsWith("y");
             _persistenceEngine = engine;
-
-            if (_isCacheSlave)
-                _upperLevelCacheClient = new CacheManagerClient();           
+            _isSlaveCache = masterCache != null;
+            _masterCache = masterCache;
 
             LoadInitialCacheContent();
         }
@@ -40,48 +41,59 @@ namespace MultiLevelCachePoC.CacheCore.Core
 
         public void ClearCache()
         {
-            //TODO :: Make this thread safe
-            _cacheInfraestructure.Dispose();
-            _cacheInfraestructure = new MemoryCache(_cacheName);
+            lock (_locker)
+            {
+                _cacheInfraestructure.Dispose();
+                _cacheInfraestructure = new MemoryCache(_cacheName);
+            }
         }
 
-        public void Insert(CacheableEntity cacheItem, SyncMode syncMode = SyncMode.WithoutSync)
+        public void Insert(CacheableEntity cacheItem, SyncMode syncMode = SyncMode.NoSync)
         {
             var item = new CacheItem(cacheItem.GetUniqueHash(), cacheItem);
 
-            if (_isCacheSlave && syncMode == SyncMode.WithSync )
+            if (_isSlaveCache && syncMode == SyncMode.Sync)
             {
-                _upperLevelCacheClient.Insert(cacheItem, false);
+                _masterCache.Insert(cacheItem, GetSyncModeForParentCache(syncMode));
             }
 
-            _cacheInfraestructure.Set(item.Key, item, GetDefaultCacheItemPlocy());
+            lock (_locker)
+            {
+                _cacheInfraestructure.Set(item.Key, item, GetDefaultCacheItemPlocy());
+            }
+
             ItemAdded(cacheItem);
         }
 
-
-        public CacheableEntity Get(string identifier, SyncMode syncMode = SyncMode.WithoutSync)
+        public CacheableEntity Get(string identifier, SyncMode syncMode = SyncMode.NoSync)
         {
-            if (_isCacheSlave && syncMode == SyncMode.WithSync)
+            if (_isSlaveCache && syncMode == SyncMode.Sync)
             {
-                var syncObject = _upperLevelCacheClient.Get(identifier, false);
+                var syncObject = _masterCache.Get(identifier, GetSyncModeForParentCache(syncMode));
                 if (syncObject != null)
-                    Insert(syncObject, SyncMode.WithoutSync);
+                    Insert(syncObject, SyncMode.NoSync);
             }
 
-            var result = _cacheInfraestructure.Get(identifier);
-            return result != null ?
-                (CacheableEntity)(result as CacheItem).Value :
-                null;
+            CacheItem result;
+            lock (_locker)
+            {
+                result = _cacheInfraestructure.Get(identifier) as CacheItem;
+            }
+
+            return result != null ? result.Value as CacheableEntity : null;
         }
 
-        public void Delete(string identifier, SyncMode syncMode = SyncMode.WithoutSync)
+        public void Delete(string identifier, SyncMode syncMode = SyncMode.NoSync)
         {
-            if (_isCacheSlave && syncMode == SyncMode.WithSync)
+            if (_isSlaveCache && syncMode == SyncMode.Sync)
             {
-                _upperLevelCacheClient.Delete(identifier, false);
+                _masterCache.Delete(identifier, GetSyncModeForParentCache(syncMode));
             }
 
-            _cacheInfraestructure.Remove(identifier);
+            lock (_locker)
+            {
+                _cacheInfraestructure.Remove(identifier);
+            }
         }
 
         private void ItemAdded(CacheableEntity item)
@@ -94,6 +106,13 @@ namespace MultiLevelCachePoC.CacheCore.Core
         {
             if (_persistenceEngine != null)
                 _persistenceEngine.Remove((CacheableEntity)(arguments.CacheItem.Value as CacheItem).Value);
+        }
+
+        private SyncMode GetSyncModeForParentCache(SyncMode syncMode)
+        {
+            return syncMode != SyncMode.Sync ?
+                SyncMode.NoSync :
+                SyncMode.Sync;
         }
 
         private CacheItemPolicy GetDefaultCacheItemPlocy()

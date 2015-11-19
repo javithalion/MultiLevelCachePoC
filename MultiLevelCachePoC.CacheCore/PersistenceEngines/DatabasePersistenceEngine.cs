@@ -1,11 +1,12 @@
-﻿using MultiLevelCachePoC.CacheContracts.EntityContracts;
+﻿using MultiLevelCachePoC.CacheCore.EntityContracts;
 using System;
 using System.Collections.Generic;
 
 namespace MultiLevelCachePoC.CacheCore.PersistenceEngines
 {
     public class DatabasePersistenceEngine : IPersistenceEngine
-    {
+    {        
+
         public IEnumerable<CacheableEntity> Load()
         {
             throw new NotImplementedException();
@@ -17,6 +18,11 @@ namespace MultiLevelCachePoC.CacheCore.PersistenceEngines
         }
 
         public void Remove(CacheableEntity value)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Dispose()
         {
             throw new NotImplementedException();
         }
