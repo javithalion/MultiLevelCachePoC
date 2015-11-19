@@ -1,3 +1,3 @@
 # MultiLevelCachePoC
-Multi level cache infraestructure based in System.Runtime.Caching
+Multi level cache infraestructure based on System.Runtime.Caching
 
