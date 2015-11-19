@@ -48,7 +48,7 @@ namespace MultiLevelCachePoC.CacheCore.Core
         {
             var item = new CacheItem(cacheItem.GetUniqueHash(), cacheItem);
 
-            if (_isSlaveCache && syncMode == SyncMode.Sync)
+            if (_isSlaveCache && syncMode != SyncMode.NoSync)
                 _masterCache.Set(cacheItem, GetSyncModeForParentCache(syncMode));
 
             lock (_locker)
@@ -59,7 +59,7 @@ namespace MultiLevelCachePoC.CacheCore.Core
 
         public CacheableEntity Get(string identifier, SyncMode syncMode = SyncMode.NoSync)
         {
-            if (_isSlaveCache && syncMode == SyncMode.Sync)
+            if (_isSlaveCache && syncMode != SyncMode.NoSync)
             {
                 var syncObject = _masterCache.Get(identifier, GetSyncModeForParentCache(syncMode));
                 if (syncObject != null)
@@ -75,7 +75,7 @@ namespace MultiLevelCachePoC.CacheCore.Core
 
         public void Delete(string identifier, SyncMode syncMode = SyncMode.NoSync)
         {
-            if (_isSlaveCache && syncMode == SyncMode.Sync)
+            if (_isSlaveCache && syncMode != SyncMode.NoSync)
                 _masterCache.Delete(identifier, GetSyncModeForParentCache(syncMode));
 
             lock (_locker)
