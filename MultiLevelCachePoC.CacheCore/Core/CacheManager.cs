@@ -52,7 +52,7 @@ namespace MultiLevelCachePoC.CacheCore.Core
                 _masterCache.Set(cacheItem, GetSyncModeForParentCache(syncMode));
 
             lock (_locker)
-                _cacheInfraestructure.Set(item.Key, item, GetDefaultCacheItemPlocy());
+                _cacheInfraestructure.Set(item.Key, item, GetDefaultCacheItemPolicy());
 
             ItemEstablished(cacheItem);
         }
@@ -101,14 +101,13 @@ namespace MultiLevelCachePoC.CacheCore.Core
                 SyncMode.Sync;
         }
 
-        private CacheItemPolicy GetDefaultCacheItemPlocy()
+        private CacheItemPolicy GetDefaultCacheItemPolicy()
         {
-            var cacheItemPolicy = new CacheItemPolicy() //TODO :: Modify expiration policy from app config
+            return new CacheItemPolicy() //TODO :: Modify expiration policy from app config
             {
                 AbsoluteExpiration = DateTime.Now.AddMinutes(1.0),
                 RemovedCallback = ItemRemoved
-            };
-            return cacheItemPolicy;
+            };            
         }
     }
 }
