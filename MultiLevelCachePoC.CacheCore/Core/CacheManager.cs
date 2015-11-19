@@ -58,9 +58,7 @@ namespace MultiLevelCachePoC.CacheCore.Core
             }
 
             lock (_locker)
-            {
                 _cacheInfraestructure.Set(item.Key, item, GetDefaultCacheItemPlocy());
-            }
 
             ItemAdded(cacheItem);
         }
@@ -76,9 +74,7 @@ namespace MultiLevelCachePoC.CacheCore.Core
 
             CacheItem result;
             lock (_locker)
-            {
                 result = _cacheInfraestructure.Get(identifier) as CacheItem;
-            }
 
             return result != null ? result.Value as CacheableEntity : null;
         }
@@ -90,10 +86,9 @@ namespace MultiLevelCachePoC.CacheCore.Core
                 _masterCache.Delete(identifier, GetSyncModeForParentCache(syncMode));
             }
 
-            lock (_locker)
-            {
+            lock (_locker)            
                 _cacheInfraestructure.Remove(identifier);
-            }
+            
         }
 
         private void ItemAdded(CacheableEntity item)
