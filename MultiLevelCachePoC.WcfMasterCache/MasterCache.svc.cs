@@ -29,9 +29,9 @@ namespace MultiLevelCachePoC.WcfMasterCache
             return _masterCache.Get(identifier, syncMode);
         }
 
-        public void Insert(CacheableEntity item, SyncMode syncMode = SyncMode.NoSync)
+        public void Set(CacheableEntity item, SyncMode syncMode = SyncMode.NoSync)
         {
-            _masterCache.Insert(item, syncMode);
+            _masterCache.Set(item, syncMode);
         }
     }
 }

@@ -14,13 +14,15 @@ namespace MultiLevelCachePoC.ConsoleLocalCache
             ICacheManager masterCache = channelFactory.CreateChannel();
 
             IPersistenceEngine persistenceEngine = new XmlFilePersistenceEngine(@".\CacheContent\");
+
             ICacheManager cacheManager = new CacheManager("LocalCache", persistenceEngine, masterCache);
 
             var engine_A = new Engine() { Id = 1, Description = "This is the engine A" };
             var station_A = new Station() { Id = 1, Description = "This is the station A" };
 
-            cacheManager.Insert(engine_A, SyncMode.Sync);
-            cacheManager.Insert(station_A);
+            cacheManager.Set(engine_A, SyncMode.Sync);
+            cacheManager.Set(station_A);
+
             var getResult_1 = cacheManager.Get(engine_A.GetUniqueHash());
             var getResult_2 = cacheManager.Get(station_A.GetUniqueHash());
 

@@ -1,12 +1,8 @@
-﻿
-using MultiLevelCachePoC.CacheCore.ApiContracts;
+﻿using MultiLevelCachePoC.CacheCore.ApiContracts;
 using MultiLevelCachePoC.CacheCore.EntityContracts;
 using MultiLevelCachePoC.CacheCore.PersistenceEngines;
-
 using System;
-using System.Configuration;
 using System.Runtime.Caching;
-
 
 namespace MultiLevelCachePoC.CacheCore.Core
 {
@@ -36,7 +32,7 @@ namespace MultiLevelCachePoC.CacheCore.Core
             if (_persistenceEngine == null) return;
 
             foreach (var item in _persistenceEngine.Load())
-                Insert(item);
+                Set(item);
         }
 
         public void ClearCache()
@@ -48,17 +44,17 @@ namespace MultiLevelCachePoC.CacheCore.Core
             }
         }
 
-        public void Insert(CacheableEntity cacheItem, SyncMode syncMode = SyncMode.NoSync)
+        public void Set(CacheableEntity cacheItem, SyncMode syncMode = SyncMode.NoSync)
         {
             var item = new CacheItem(cacheItem.GetUniqueHash(), cacheItem);
 
-            if (_isSlaveCache && syncMode == SyncMode.Sync)            
-                _masterCache.Insert(cacheItem, GetSyncModeForParentCache(syncMode));            
+            if (_isSlaveCache && syncMode == SyncMode.Sync)
+                _masterCache.Set(cacheItem, GetSyncModeForParentCache(syncMode));
 
             lock (_locker)
                 _cacheInfraestructure.Set(item.Key, item, GetDefaultCacheItemPlocy());
 
-            ItemAdded(cacheItem);
+            ItemEstablished(cacheItem);
         }
 
         public CacheableEntity Get(string identifier, SyncMode syncMode = SyncMode.NoSync)
@@ -67,7 +63,7 @@ namespace MultiLevelCachePoC.CacheCore.Core
             {
                 var syncObject = _masterCache.Get(identifier, GetSyncModeForParentCache(syncMode));
                 if (syncObject != null)
-                    Insert(syncObject, SyncMode.NoSync);
+                    Set(syncObject, SyncMode.NoSync);
             }
 
             CacheItem result;
@@ -79,14 +75,14 @@ namespace MultiLevelCachePoC.CacheCore.Core
 
         public void Delete(string identifier, SyncMode syncMode = SyncMode.NoSync)
         {
-            if (_isSlaveCache && syncMode == SyncMode.Sync)            
+            if (_isSlaveCache && syncMode == SyncMode.Sync)
                 _masterCache.Delete(identifier, GetSyncModeForParentCache(syncMode));
-            
-            lock (_locker)            
-                _cacheInfraestructure.Remove(identifier);            
+
+            lock (_locker)
+                _cacheInfraestructure.Remove(identifier);
         }
 
-        private void ItemAdded(CacheableEntity item)
+        private void ItemEstablished(CacheableEntity item)
         {
             if (_persistenceEngine != null)
                 _persistenceEngine.Persist(item);

@@ -9,7 +9,7 @@ namespace MultiLevelCachePoC.CacheCore.ApiContracts
     public interface ICacheManager
     {
         [OperationContract]
-        void Insert(CacheableEntity item, SyncMode syncMode = SyncMode.NoSync);
+        void Set(CacheableEntity item, SyncMode syncMode = SyncMode.NoSync);
 
         [OperationContract]
         CacheableEntity Get(string identifier, SyncMode syncMode = SyncMode.NoSync);
