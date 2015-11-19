@@ -52,10 +52,8 @@ namespace MultiLevelCachePoC.CacheCore.Core
         {
             var item = new CacheItem(cacheItem.GetUniqueHash(), cacheItem);
 
-            if (_isSlaveCache && syncMode == SyncMode.Sync)
-            {
-                _masterCache.Insert(cacheItem, GetSyncModeForParentCache(syncMode));
-            }
+            if (_isSlaveCache && syncMode == SyncMode.Sync)            
+                _masterCache.Insert(cacheItem, GetSyncModeForParentCache(syncMode));            
 
             lock (_locker)
                 _cacheInfraestructure.Set(item.Key, item, GetDefaultCacheItemPlocy());
@@ -81,14 +79,11 @@ namespace MultiLevelCachePoC.CacheCore.Core
 
         public void Delete(string identifier, SyncMode syncMode = SyncMode.NoSync)
         {
-            if (_isSlaveCache && syncMode == SyncMode.Sync)
-            {
+            if (_isSlaveCache && syncMode == SyncMode.Sync)            
                 _masterCache.Delete(identifier, GetSyncModeForParentCache(syncMode));
-            }
-
-            lock (_locker)            
-                _cacheInfraestructure.Remove(identifier);
             
+            lock (_locker)            
+                _cacheInfraestructure.Remove(identifier);            
         }
 
         private void ItemAdded(CacheableEntity item)
