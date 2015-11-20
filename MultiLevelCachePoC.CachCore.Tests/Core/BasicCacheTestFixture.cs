@@ -38,7 +38,7 @@ namespace MultiLevelCachePoC.CachCore.Tests.Core
             var result = cacheManager.ElementsCount();
 
             //Assert
-            Assert.IsTrue(result == 0, "On just created cache we should have 0 elements");
+            Assert.IsTrue(result == 0, "Just created cache should have 0 elements");
         }
 
         [Test]
