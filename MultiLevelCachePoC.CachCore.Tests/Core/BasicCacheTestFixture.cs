@@ -24,7 +24,7 @@ namespace MultiLevelCachePoC.CachCore.Tests.Core
 
             //Assert
             Assert.IsTrue((cacheManager as CacheManager).CacheName == cacheName, "Name was not properly set");
-            Assert.IsFalse((cacheManager as CacheManager).IsSlaveCache, "Cache was not marked as expected (should not be a slave cache)");
+            Assert.IsFalse((cacheManager as CacheManager).IsSlaveCache, "Cache was not marked as expected (should not be a slave cache since we didn't provide a master cache)");
         }
 
         [Test]
@@ -69,7 +69,6 @@ namespace MultiLevelCachePoC.CachCore.Tests.Core
 
             //Assert
             Assert.IsTrue(totalElements == 1, "We should have just one element within the cache");
-
         }
 
         [Test]
