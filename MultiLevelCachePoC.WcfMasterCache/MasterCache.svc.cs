@@ -24,6 +24,11 @@ namespace MultiLevelCachePoC.WcfMasterCache
             _masterCache.Delete(identifier, syncMode);
         }
 
+        public long ElementsCount()
+        {
+            return _masterCache.ElementsCount();
+        }
+
         public CacheableEntity Get(string identifier, SyncMode syncMode = SyncMode.NoSync)
         {
             return _masterCache.Get(identifier, syncMode);

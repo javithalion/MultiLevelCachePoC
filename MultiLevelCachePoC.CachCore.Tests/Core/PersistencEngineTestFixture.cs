@@ -50,6 +50,7 @@ namespace MultiLevelCachePoC.CachCore.Tests.Core
             Assert.IsTrue(
                 listOfDummyObjects.All(o => cacheManager.Get(o.GetUniqueHash()) != null),
                 "Loaded items are not present within the cache!");
+            Assert.IsTrue(cacheManager.ElementsCount() == listOfDummyObjects.Count, "We should have just the elements we added during the initial load");
         }
 
         [Test]

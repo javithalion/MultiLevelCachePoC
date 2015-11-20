@@ -19,5 +19,8 @@ namespace MultiLevelCachePoC.CacheCore.ApiContracts
 
         [OperationContract]
         void ClearCache();
+
+        [OperationContract]
+        long ElementsCount();
     }
 }

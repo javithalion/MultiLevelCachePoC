@@ -100,7 +100,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\BasicCacheTestFixture.cs" />
+    <Compile Include="Core\MasterSlaveTestFixture.cs" />
     <Compile Include="Core\PersistencEngineTestFixture.cs" />
+    <Compile Include="PersistenceEngines\XmlFilePersistenceEngineTestFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Support\DummyObject.cs" />
   </ItemGroup>
